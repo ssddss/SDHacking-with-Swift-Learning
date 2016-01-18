@@ -63,16 +63,17 @@ class ViewController: UIViewController,WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.URL
         
-//        if  let host = url!.host {
-//            for website in websites {
-//                if host.rangeOfString(website) != nil {
+        //检测是否包含安全网站的字符串才可访问
+        if  let host = url!.host {
+            for website in websites {
+                if host.rangeOfString(website) != nil {
                     decisionHandler(.Allow)
-//                    return
-//                }
-//            }
-//        }
-//        
-//        decisionHandler(.Cancel)
+                    return
+                }
+            }
+        }
+        
+        decisionHandler(.Cancel)
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "estimatedProgress" {
