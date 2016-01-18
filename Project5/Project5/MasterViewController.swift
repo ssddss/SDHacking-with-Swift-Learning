@@ -12,6 +12,8 @@ class MasterViewController: UITableViewController {
 
     var objects = [String]()
     var allWords = [String]()
+    let errorTitle: String = "Word not recognised"
+    let errorMessage: String = "You can't just make them up, you know!"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +55,15 @@ class MasterViewController: UITableViewController {
                     
                     let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                     tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    return
                 }
-            }
+                
         }
+       
+    }
+        let alert  = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
     }
 
     func wordIsPossible(word: String) -> Bool {
